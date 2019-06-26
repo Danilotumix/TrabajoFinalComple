@@ -1,0 +1,4 @@
+.vscode/
+DBConverter/__pycache__/
+PathFinder/__pycache__/
+PathFinder2/__pycache__/
