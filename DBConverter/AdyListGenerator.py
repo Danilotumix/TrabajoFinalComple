@@ -5,7 +5,7 @@ import sys
 filename = ""
 
 if len(sys.argv) == 1:
-    filename = "C:/Users/DC/Documents/TrabajoFinalComple/Bases de datos/CPDB.csv"
+    filename = "C:/Users/DC/Documents/TrabajoFinalComple/DBConverter/CPDB.csv"
 else:
     filename = sys.argv[1]
 
@@ -13,12 +13,12 @@ print("Cargando...")
 
 cMap = CityMap()
 
-CityMap.loadFromCSV(cMap, filename)
+CityMap.loadFromCSV(cMap, filename, 1)
 
 print("¡Listo!")
 print("Conectando ciudades...")
 
-CityMap.connectCitiesByDistanceOrig(cMap)
+CityMap.connectCitiesByDistance(cMap)
 
 print("¡Listo!")
 print("Exportando...")

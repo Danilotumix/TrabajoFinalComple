@@ -1,25 +1,18 @@
 import math
 
 class City:
-    def __init__(self, code, name, x, y, d):
+    def __init__(self, code, name, x, y, capitalStatus):
         self.code = code
         self.name = name
         self.x = x
         self.y = y
-        self.dOrig = 0
-        self.d = d
-        self.connectedCities = [0]*4
-        self.connectedDistances = [-1]*4
-    
-    def __lt__(self, other):
-        return self.d < other.d
+        self.capitalStatus = capitalStatus
+        self.connectedCities = []
+        self.connectedDistances = []
 
     def connectWithCity(self, city, posCity):
-        for i in range(len(self.connectedDistances)):
-            if self.connectedDistances[i] == -1:
-                self.connectedDistances[i] = getDistance(self, city)
-                self.connectedCities[i] = posCity
-                break
+        self.connectedDistances.append(getDistance(self, city))
+        self.connectedCities.append(posCity)
 
 def getDistance(a, b):
     diff_x = a.x - b.x

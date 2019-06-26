@@ -2,3 +2,8 @@
 DBConverter/__pycache__/
 PathFinder/__pycache__/
 PathFinder2/__pycache__/
+
+DBConverter/CPDB.csv
+DBConverter/IEDB.csv
+./adylst.al
+./metadata.md
