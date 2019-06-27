@@ -48,7 +48,7 @@ def process(v):
         subp.Popen("\"BF\BF.py\" " + filename, shell=True)
 
 root = tk.Tk()
-root.geometry("160x130")
+root.geometry("170x130")
 root.title("Trabajo final")
 
 tk.Label(root, text = "Conectar las ciudades por: ").grid(column=0, row=0)
