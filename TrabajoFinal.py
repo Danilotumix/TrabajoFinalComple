@@ -1,4 +1,3 @@
-import sys
 import subprocess as subp
 import os as os
 import tkinter as tk
@@ -20,11 +19,15 @@ def process(v1, v2, filename):
 
     CityMap.connectCitiesByDistance(cMap)
 
-    #data = CityMap.getAdylst(cMap, "adylst.al", "metadata.md")
-
     if v2 == 0:
         CityMap.exportAsAdylst(cMap, "PathFinder/adylst.al")
+        subp.Popen("cls", shell=True)
         subp.Popen("\"PathFinder\PathFinder.py\" adylst.al", shell=True)
+    
+    if v2 == 1:
+        CityMap.exportAsAdylst(cMap, "WarshallFinder/adylst.al")
+        subp.Popen("cls", shell=True)
+        subp.Popen("\"WarshallFinder\WarshallFinder.py\" adylst.al", shell=True)
 
 root = tk.Tk()
 root.geometry("150x120")
@@ -44,14 +47,15 @@ combo1.current(0)
 
 combo2 = ttk.Combobox(root, 
                             values=[
-                                    "Bruteforce/Backtracking"])
+                                    "PathFinder (Bruteforce/Backtracking)",
+                                    "WarshallFinder (Floyd-Warshall)"])
 
 tk.Label(root, text = "Seleccionar algoritmo: ").grid(column=0, row=2)
 
 combo2.grid(column=0, row=3)
 combo2.current(0)
 
-filename = filedialog.askopenfilename(initialdir = sys.argv[0], title = "Seleccione la base de datos", filetypes = (("Archivos de valores delimitados por comas","*.csv"), ("Todos los archivos", "*")))
+filename = filedialog.askopenfilename(initialdir = "./Base de datos/", title = "Seleccione la base de datos", filetypes = (("Archivos de valores delimitados por comas","*.csv"), ("Todos los archivos", "*")))
 
 tk.Button(root, text="Correr algoritmo", command= lambda: process(combo1.current(), combo2.current(), filename)).grid(column=0, row=4)
 

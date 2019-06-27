@@ -8,10 +8,21 @@ class CityMap:
         self.numberCities = 0
 
     def connectCitiesByDistance(self):
+        print("Conectando ciudades...")
+
+        temp = 1 + 3.3322*math.log10(self.numberCities)
+        thing = self.numberCities//temp
+
         for i in range(self.numberCities - 1):
+            if(i % thing == 0):
+                print(str(round((i/self.numberCities)*100,2)) + " %")
+
             for j in range(self.numberCities - 1 - i):
                 City.connectWithCity(self.mapCities[i], self.mapCities[j + 1 + i], j + 1 + i)
                 City.connectWithCity(self.mapCities[j + 1 + i], self.mapCities[i], i)
+        
+        if(self.numberCities/temp != self.numberCities//temp):
+            print("100 %\n¡Listo!")
 
     def loadFromCSV(self, filename, capital = -1):
         file = open(filename, "r")
@@ -78,9 +89,7 @@ class CityMap:
         file.write(data)
         file.close()
 
-    def getAdylst(self, filename):
-        file = open(filename, "w+")
-
+    def getAdylst(self):
         data = str(self.numberCities) + '\n'
 
         for city in self.mapCities:

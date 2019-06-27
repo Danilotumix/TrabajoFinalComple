@@ -118,7 +118,7 @@ def printPath(path, final):
         print("\nTiempo de ejecución total:", round((endTime[0] - startTime), 2), "segundos")
 
 if len(sys.argv) == 1:
-    adyLstFN = "C:/Users/Alumnos/Documents/Python Projects/Trabajo Parcial/PathFinder/adylst.al"
+    adyLstFN = "adylst.al"
 else:
     adyLstFN = "PathFinder/" + sys.argv[1]
 
