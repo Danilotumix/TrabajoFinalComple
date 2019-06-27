@@ -27,7 +27,8 @@ def generateAl(v):
 def process(v):
     subp.Popen("cls", shell=True)
 
-    filename = filedialog.askopenfilename(initialdir = "./", title = "Seleccione input", filetypes = (("Archivo de lista de adyacencia","*.al"), ("Todos los archivos", "*")))
+    if v != 3:
+        filename = filedialog.askopenfilename(initialdir = "./", title = "Seleccione input", filetypes = (("Archivo de lista de adyacencia","*.al"), ("Todos los archivos", "*")))
 
     if v == 0:
         #subp.Popen("cls", shell=True)
