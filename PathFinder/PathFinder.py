@@ -120,7 +120,7 @@ def printPath(path, final):
 if len(sys.argv) == 1:
     adyLstFN = "adylst.al"
 else:
-    adyLstFN = "PathFinder/" + sys.argv[1]
+    adyLstFN = sys.argv[1]
 
 pf = PathFinder()
 PathFinder.loadAdylst(pf, adyLstFN)

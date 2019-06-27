@@ -7,41 +7,48 @@ from tkinter import messagebox as msg
 
 from DBConverter.CityMap import CityMap
 
-def process(v1, v2, filename):
+def generateAl(v):
     subp.Popen("cls", shell=True)
 
-    if v2 != 3:
-        cMap = CityMap()
+    filename = filedialog.askopenfilename(initialdir = "./Base de datos/", title = "Seleccione la base de datos", filetypes = (("Archivos de valores delimitados por comas","*.csv"), ("Todos los archivos", "*")))
 
-        if v1 == 3:
-            CityMap.loadFromCSV(cMap, filename, 0)
-        else:
-            CityMap.loadFromCSV(cMap, filename, v1 + 1)
+    cMap = CityMap()
 
-        CityMap.connectCitiesByDistance(cMap)
+    if v == 3:
+        CityMap.loadFromCSV(cMap, filename, 0)
+    else:
+        CityMap.loadFromCSV(cMap, filename, v + 1)
 
-    if v2 == 0:
-        CityMap.exportAsAdylst(cMap, "PathFinder/adylst.al")
+    CityMap.connectCitiesByDistance(cMap)
+    CityMap.exportAsAdylst(cMap, "adylst.al")
+    print("¡Listo!")
+    msg.showinfo("¡Finalizado!", "Lista de adyacencia guardada como adylst.al")
+
+def process(v):
+    subp.Popen("cls", shell=True)
+
+    filename = filedialog.askopenfilename(initialdir = "./", title = "Seleccione input", filetypes = (("Archivo de lista de adyacencia","*.al"), ("Todos los archivos", "*")))
+
+    if v == 0:
         #subp.Popen("cls", shell=True)
-        subp.Popen("\"PathFinder\PathFinder.py\" adylst.al", shell=True)
+        subp.Popen("\"PathFinder\PathFinder.py\" " + filename, shell=True)
     
-    if v2 == 1:
-        CityMap.exportAsAdylst(cMap, "WarshallFinder/adylst.al")
+    if v == 1:
         #subp.Popen("cls", shell=True)
-        subp.Popen("\"WarshallFinder\WarshallFinder.py\" adylst.al", shell=True)
+        subp.Popen("\"WarshallFinder\WarshallFinder.py\" " + filename, shell=True)
     
-    if v2 == 2:
-        CityMap.exportAsAdylst(cMap, "MCB/adylst.al")
+    if v == 2:
         #subp.Popen("cls", shell=True)
-        subp.Popen("\"MCB\MCB.py\" adylst.al", shell=True)
+        print("\"MCB\MCB.py\" " + filename)
+        subp.Popen("\"MCB\MCB.py\" " + filename, shell=True)
 
-    if v2 == 3:
+    if v == 3:
         filename = filedialog.askopenfilename(initialdir = "./BF/", title = "Seleccione input", filetypes = (("Archivos de valores delimitados por comas","*.csv"), ("Todos los archivos", "*")))
         #subp.Popen("cls", shell=True)
         subp.Popen("\"BF\BF.py\" " + filename, shell=True)
 
 root = tk.Tk()
-root.geometry("150x120")
+root.geometry("160x130")
 root.title("Trabajo final")
 
 tk.Label(root, text = "Conectar las ciudades por: ").grid(column=0, row=0)
@@ -56,6 +63,8 @@ combo1 = ttk.Combobox(root,
 combo1.grid(column=0, row=1)
 combo1.current(0)
 
+tk.Button(root, text="Generar lista de adyacencia", command= lambda: generateAl(combo1.current())).grid(column=0, row=2)
+
 combo2 = ttk.Combobox(root, 
                             values=[
                                     "PathFinder (Bruteforce/Backtracking)",
@@ -63,13 +72,11 @@ combo2 = ttk.Combobox(root,
                                     "MCB! (Kruskal)",
                                     "BF (Bellman-Ford)"])
 
-tk.Label(root, text = "Seleccionar algoritmo: ").grid(column=0, row=2)
+tk.Label(root, text = "Seleccionar algoritmo: ").grid(column=0, row=3)
 
-combo2.grid(column=0, row=3)
+combo2.grid(column=0, row=4)
 combo2.current(0)
 
-filename = filedialog.askopenfilename(initialdir = "./Base de datos/", title = "Seleccione la base de datos", filetypes = (("Archivos de valores delimitados por comas","*.csv"), ("Todos los archivos", "*")))
-
-tk.Button(root, text="Correr algoritmo", command= lambda: process(combo1.current(), combo2.current(), filename)).grid(column=0, row=4)
+tk.Button(root, text="Correr algoritmo", command= lambda: process(combo2.current())).grid(column=0, row=5)
 
 root.mainloop()

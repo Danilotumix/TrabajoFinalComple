@@ -159,7 +159,7 @@ def printPath(path, weights):
 if len(sys.argv) == 1:
     adyLstFN = "adylst.al"
 else:
-    adyLstFN = "WarshallFinder/" + sys.argv[1]
+    adyLstFN = sys.argv[1]
 
 G = loadWeightedGraph(adyLstFN)
 p, w = WarshallFinder(G)

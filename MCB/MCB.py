@@ -97,7 +97,7 @@ def MCB(ady, n):
 if len(sys.argv) == 1:
     adyLstFN = "adylst.al"
 else:
-    adyLstFN = "MCB/" + sys.argv[1]
+    adyLstFN = sys.argv[1]
 
 with open(adyLstFN) as al:
   line=al.readline().strip()

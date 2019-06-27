@@ -22,7 +22,7 @@ class CityMap:
                 City.connectWithCity(self.mapCities[j + 1 + i], self.mapCities[i], i)
         
         if(self.numberCities/temp != self.numberCities//temp):
-            print("100 %\n¡Listo!")
+            print("100 %\n")
 
     def loadFromCSV(self, filename, capital = -1):
         file = open(filename, "r")
