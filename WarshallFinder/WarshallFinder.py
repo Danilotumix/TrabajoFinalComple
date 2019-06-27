@@ -20,6 +20,7 @@ def loadWeightedGraph(filename):
 
 def floydWarshall(G):
     n = len(G)
+    path = [[-1]*n for _ in range(n)]
     dist = [[float('inf')]*n for _ in range(n)]
 
     for u in range(n):
@@ -27,8 +28,9 @@ def floydWarshall(G):
     
     for u in range(n):
         for v, w in G[u]:
+            path[u][v] = u
             dist[u][v] = w
-    
+
     print("Generando matriz de caminos...")
 
     temp = 1 + 3.3322*math.log10(n)
@@ -42,14 +44,44 @@ def floydWarshall(G):
             for j in range(n):
                 if dist[i][j] > dist[i][k] + dist[k][j]:
                     dist[i][j] = dist[i][k] + dist[k][j]
+                    path[i][j] = k
     
     if(n/temp != n//temp):
         print("100 %\n¡Listo!")
 
-    return dist
+    return path, dist
 
-def WarshallFinder(M):
-    n = len(M)
+def getValidPath(Mp, visited, j, k):
+    while j != Mp[j][k]:
+        if visited[k]:
+            return False
+        k = Mp[j][k]
+    
+    return True
+
+def visitParents(Mp, visited, path, weights, j, k):
+    tempPath = []
+    tempWeights = []
+
+    while j != Mp[j][k]:
+        visited[k] = True
+        tempPath.append(k)
+        tempWeights.append(k)
+        k = Mp[j][k]
+
+    for i in reversed(tempPath):
+        path.append(i)
+    
+    for i in reversed(tempWeights):
+        weights.append(i)
+
+
+def WarshallFinder(G):
+    Mp, Md = floydWarshall(G)
+
+    print("\nAlgoritmo en ejecución\nPresione S para obtener el estado actual")
+
+    n = len(Md)
     minPath = None
     minWeights = None
 
@@ -77,21 +109,29 @@ def WarshallFinder(M):
                             printPath(path, weights)
                             print("Progreso: " + str(round(((i*(n-1)*n + j*n + k)/(n*(n-1)*n))*100,2)) + " %")
 
-                    if M[j][k] < min:
-                        min = M[j][k]
-                        idxmin = k
+                    if Md[j][k] < min:
+                        if Mp[j][k] == j:
+                            min = Md[j][k]
+                            idxmin = k
+                        else:
+                            if getValidPath(Mp, visited, j, k):
+                                min = Md[j][k]
+                                idxmin = k
             
-            totalW += min
-            visited[idxmin] = True
-            path.append(idxmin)
-            weights.append(totalW)
+            if Mp[j][k] == j:
+                totalW += min
+                visited[idxmin] = True
+                path.append(idxmin)
+                weights.append(totalW)
+            else:
+                visitParents(Mp, path, weights, visited, j, k)
+                totalW += min
         
-        totalW += M[path[len(path) - 1]][i]
+        totalW += Md[path[len(path) - 1]][i]
         path.append(i)
 
         if totalW < minW:
             minW = totalW
-
             minPath = path
             minWeights = weights
     
@@ -122,11 +162,7 @@ else:
     adyLstFN = "WarshallFinder/" + sys.argv[1]
 
 G = loadWeightedGraph(adyLstFN)
-M = floydWarshall(G)
-
-print("\nAlgoritmo en ejecución\nPresione S para obtener el estado actual")
-
-p, w = WarshallFinder(M)
+p, w = WarshallFinder(G)
 print("\n¡¡¡Camino (relativamente) más corto encontrado!!!")
 
 printPath(p,w)
