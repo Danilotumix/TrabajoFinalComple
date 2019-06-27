@@ -64,6 +64,7 @@ def visitParents(Mp, visited, path, weights, j, k):
     tempWeights = []
 
     while j != Mp[j][k]:
+        print(len(visited))
         visited[k] = True
         tempPath.append(k)
         tempWeights.append(k)
@@ -88,6 +89,7 @@ def WarshallFinder(G):
     minW = float('inf')
 
     for i in range(n):
+        print("SIZE: " + str(n))
         visited = [False]*n
         path = []*n
         weights = []*n
