@@ -1,4 +1,4 @@
-# TrabajoFinalComple
+# Trabajo Final de Complejidad Algorítmica
 
 Implementando 3 algoritmos para resolver el problema del vendedor viajero.
 
