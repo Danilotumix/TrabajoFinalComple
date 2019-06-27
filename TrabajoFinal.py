@@ -49,7 +49,7 @@ def process(v):
         subp.Popen("\"BF\BF.py\" " + filename, shell=True)
 
 root = tk.Tk()
-root.geometry("160x140")
+root.geometry("150x140")
 root.title("Trabajo final")
 
 tk.Label(root, text = "Conectar las ciudades por: ").grid(column=0, row=0)
@@ -64,7 +64,7 @@ combo1 = ttk.Combobox(root,
 combo1.grid(column=0, row=1)
 combo1.current(0)
 
-tk.Button(root, text="Generar lista de adyacencia", command= lambda: generateAl(combo1.current())).grid(column=0, row=2)
+tk.Button(root, text="Crear lista de adyacencia", command= lambda: generateAl(combo1.current())).grid(column=0, row=2)
 
 combo2 = ttk.Combobox(root, 
                             values=[
