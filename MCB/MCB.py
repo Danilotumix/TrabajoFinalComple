@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[10]:
-
 from math import sqrt, inf
 from heapq import heappop, heappush
 
@@ -67,7 +65,6 @@ def MCB(ady, n):
       outPoints.append(p)
 
   while len(outPoints):
-    print(cycle)#Imprime proceso de llenado
     m = len(cycle)
     e = outPoints.pop()
     idx = 0
@@ -126,16 +123,16 @@ with open(adyLstFN) as al:
     proc.append(temp1)
   
   adyc,cycle = MCB(proc, max(ns)+1)
+  print("La ruta de Minimun Cycle Bifurcation es: ")
   print(cycle)
-  #print(adyc)
+  print("")
+  
   uwu=len(adyc)
+
+  total = 0
+
   for inn in range(uwu):
-      print(adyc[inn])
-    ##este es
-
-
-# In[ ]:
-
-
-
-
+    for _, v in adyc[inn]:
+      total += v
+  
+  print("El recorrido total es: " + str(round(total, 5)) + " km")
