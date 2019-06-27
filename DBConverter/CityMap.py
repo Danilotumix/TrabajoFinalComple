@@ -77,3 +77,23 @@ class CityMap:
         data = data[0:len(data)-1]
         file.write(data)
         file.close()
+
+    def getAdylst(self, filename):
+        file = open(filename, "w+")
+
+        data = str(self.numberCities) + '\n'
+
+        for city in self.mapCities:
+            cList = city.connectedCities
+            if len(cList) == 0:
+                continue
+            dList = city.connectedDistances
+
+            for i in range(len(cList)):
+                data += str(cList[i]) + ',' + f"{dList[i]:.6f}"
+                if i != len(cList) - 1:
+                    data += ';'
+            
+            data += '\n'
+
+        return data[0:len(data)-1]

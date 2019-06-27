@@ -19,6 +19,7 @@ class PathFinder:
     
     def loadAdylst(self, filename):
         file = open(filename, "r")
+        file.readline()
 
         i = 0
         while True:
@@ -119,11 +120,11 @@ def printPath(path, final):
 if len(sys.argv) == 1:
     adyLstFN = "C:/Users/Alumnos/Documents/Python Projects/Trabajo Parcial/PathFinder/adylst.al"
 else:
-    adyLstFN = sys.argv[1]
+    adyLstFN = "PathFinder/" + sys.argv[1]
 
 pf = PathFinder()
 PathFinder.loadAdylst(pf, adyLstFN)
-print("¡Se ha cargado la lista de adyacencia " + adyLstFN + "!")
+print("¡Se ha cargado la lista de adyacencia!")
 
 print("\nAlgoritmo en ejecución\nPresione S para obtener el estado actual")
 
