@@ -21,13 +21,18 @@ def process(v1, v2, filename):
 
     if v2 == 0:
         CityMap.exportAsAdylst(cMap, "PathFinder/adylst.al")
-        subp.Popen("cls", shell=True)
+        #subp.Popen("cls", shell=True)
         subp.Popen("\"PathFinder\PathFinder.py\" adylst.al", shell=True)
     
     if v2 == 1:
         CityMap.exportAsAdylst(cMap, "WarshallFinder/adylst.al")
-        subp.Popen("cls", shell=True)
+        #subp.Popen("cls", shell=True)
         subp.Popen("\"WarshallFinder\WarshallFinder.py\" adylst.al", shell=True)
+    
+    if v2 == 2:
+        CityMap.exportAsAdylst(cMap, "MCB/adylst.al")
+        #subp.Popen("cls", shell=True)
+        subp.Popen("\"MCB\MCB.py\" adylst.al", shell=True)
 
 root = tk.Tk()
 root.geometry("150x120")
@@ -48,7 +53,8 @@ combo1.current(0)
 combo2 = ttk.Combobox(root, 
                             values=[
                                     "PathFinder (Bruteforce/Backtracking)",
-                                    "WarshallFinder (Floyd-Warshall)"])
+                                    "WarshallFinder (Floyd-Warshall)",
+                                    "MCB! (Kruskal)"])
 
 tk.Label(root, text = "Seleccionar algoritmo: ").grid(column=0, row=2)
 
