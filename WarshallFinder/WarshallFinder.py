@@ -107,7 +107,7 @@ def WarshallFinder(G):
                         if key == b's' or key == b'S':
                             print("Resumen de ejecución hasta el momento:")
                             printPath(path, weights)
-                            print("Progreso: " + str(round(((i*(n-1)*n + j*n + k)/(n*(n-1)*n))*100,2)) + " %")
+                            print("\nProgreso: " + str(round(((i*(n-1)*n + j*n + k)/(n*(n-1)*n))*100,2)) + " %\n")
 
                     if Md[j][k] < min:
                         if Mp[j][k] == j:
@@ -166,4 +166,4 @@ p, w = WarshallFinder(G)
 print("\n¡¡¡Camino (relativamente) más corto encontrado!!!")
 
 printPath(p,w)
-print("Progreso: 100 %")
+print("\nProgreso: 100 %")

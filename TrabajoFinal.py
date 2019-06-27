@@ -10,14 +10,15 @@ from DBConverter.CityMap import CityMap
 def process(v1, v2, filename):
     subp.Popen("cls", shell=True)
 
-    cMap = CityMap()
+    if v2 != 3:
+        cMap = CityMap()
 
-    if v1 == 3:
-        CityMap.loadFromCSV(cMap, filename, 0)
-    else:
-        CityMap.loadFromCSV(cMap, filename, v1 + 1)
+        if v1 == 3:
+            CityMap.loadFromCSV(cMap, filename, 0)
+        else:
+            CityMap.loadFromCSV(cMap, filename, v1 + 1)
 
-    CityMap.connectCitiesByDistance(cMap)
+        CityMap.connectCitiesByDistance(cMap)
 
     if v2 == 0:
         CityMap.exportAsAdylst(cMap, "PathFinder/adylst.al")
@@ -33,6 +34,11 @@ def process(v1, v2, filename):
         CityMap.exportAsAdylst(cMap, "MCB/adylst.al")
         #subp.Popen("cls", shell=True)
         subp.Popen("\"MCB\MCB.py\" adylst.al", shell=True)
+
+    if v2 == 3:
+        filename = filedialog.askopenfilename(initialdir = "./BF/", title = "Seleccione input", filetypes = (("Archivos de valores delimitados por comas","*.csv"), ("Todos los archivos", "*")))
+        #subp.Popen("cls", shell=True)
+        subp.Popen("\"BF\BF.py\" " + filename, shell=True)
 
 root = tk.Tk()
 root.geometry("150x120")
@@ -54,7 +60,8 @@ combo2 = ttk.Combobox(root,
                             values=[
                                     "PathFinder (Bruteforce/Backtracking)",
                                     "WarshallFinder (Floyd-Warshall)",
-                                    "MCB! (Kruskal)"])
+                                    "MCB! (Kruskal)",
+                                    "BF (Bellman-Ford)"])
 
 tk.Label(root, text = "Seleccionar algoritmo: ").grid(column=0, row=2)
 
