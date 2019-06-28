@@ -6,7 +6,6 @@ import time
 import sys
 
 startTime = time.time()
-endTime = []
 
 class Path:
     def __init__(self, parent, weight):
@@ -83,9 +82,6 @@ class PathFinder:
                 
                 if len(minPath) == 0 or actualWeight + pair.weight < minPath[len(minPath) - 1].weight:
                     minPath = PathFinder.bigFSearch(self, pair.city, path.copy(), visited.copy(), actualWeight + pair.weight, citiesLeft - 1, startCity, totalCities, minPath.copy())
-
-        if citiesLeft == totalCities:
-            endTime.append(time.time())
         
         return minPath
 
@@ -118,11 +114,11 @@ def printPath(path, final):
         else:
             print("\n\nDistancia total:", round(path[i].weight, 2), "kilómetros")
 
+    actualTime = time.time()
     if final == False:
-        actualTime = time.time()
         print("\nTiempo de ejecución hasta el momento:", round((actualTime - startTime), 2), "segundos")
     else:
-        print("\nTiempo de ejecución total:", round((endTime[0] - startTime), 2), "segundos")
+        print("\nTiempo de ejecución total:", round((actualTime - startTime), 2), "segundos")
 
 if len(sys.argv) == 1:
     adyLstFN = "adylst.al"

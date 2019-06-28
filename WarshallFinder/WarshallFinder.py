@@ -1,6 +1,9 @@
 import msvcrt
+import time
 import sys
 import math
+
+startTime = time.time()
 
 def loadWeightedGraph(filename):
     file = open(filename)
@@ -109,6 +112,12 @@ def WarshallFinder(G):
             idxmin = -1
             for j in range(n):
                 if j != i and not visited[j]:
+                    if msvcrt.kbhit():
+                        key = msvcrt.getch()
+            
+                        if key == b's' or key == b'S':
+                            printPath(path, weights)
+                
                     if Md[idx][j] < min:
                         if Mp[idx][j] == idx:
                             min = Md[idx][j]
@@ -162,6 +171,9 @@ def printPath(path, weights):
             print(" -> ", end='')
         else:
             print("\n\nDistancia total:", round(weights[i], 2), "kilómetros")
+    
+    actualTime = time.time()
+    print("\nTiempo de ejecución hasta el momento:", round((actualTime - startTime), 2), "segundos")
 
 if len(sys.argv) == 1:
     adyLstFN = "adylst.al"
@@ -174,3 +186,5 @@ print("\n¡¡¡Camino (relativamente) más corto encontrado!!!")
 
 printPath(p,w)
 print("\nProgreso: 100 %")
+actualTime = time.time()
+print("\nTiempo de ejecución total:", round((actualTime - startTime), 2), "segundos")
