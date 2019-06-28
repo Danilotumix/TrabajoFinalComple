@@ -51,24 +51,25 @@ def floydWarshall(G):
 
     return path, dist
 
-def getValidPath(Mp, visited, j, k):
-    while j != Mp[j][k]:
-        if visited[k]:
+def getValidPath(Mp, visited, idx, j):
+    while j != Mp[idx][j]:
+        if visited[j]:
             return False
-        k = Mp[j][k]
+
+        j = Mp[idx][j]
     
     return True
 
-def visitParents(Mp, visited, path, weights, j, k):
+def visitParents(Mp, visited, path, weights, idx, j):
     tempPath = []
     tempWeights = []
 
-    while j != Mp[j][k]:
+    while idx != Mp[idx][j]:
         print(len(visited))
-        visited[k] = True
-        tempPath.append(k)
-        tempWeights.append(k)
-        k = Mp[j][k]
+        visited[j] = True
+        tempPath.append(j)
+        tempWeights.append(j)
+        j = Mp[idx][j]
 
     for i in reversed(tempPath):
         path.append(i)
@@ -76,9 +77,13 @@ def visitParents(Mp, visited, path, weights, j, k):
     for i in reversed(tempWeights):
         weights.append(i)
 
-
 def WarshallFinder(G):
     Mp, Md = floydWarshall(G)
+
+    #for i in Md:
+    #    for v in i:
+    #        print(str(round(v,2)) + " ", end="")
+    #    print("")
 
     print("\nAlgoritmo en ejecución\nPresione S para obtener el estado actual")
 
@@ -89,48 +94,48 @@ def WarshallFinder(G):
     minW = float('inf')
 
     for i in range(n):
-        print("SIZE: " + str(n))
         visited = [False]*n
-        path = []*n
-        weights = []*n
+        path = []
+        weights = []
 
         visited[i] = True
         path.append(i)
+        weights.append(0)
 
         totalW = 0
-        for j in range(n - 1):
+        idx = i
+        while len(path) != n:
             min = float('inf')
             idxmin = -1
-            for k in range(n):
-                if j != k and not visited[k]:
-                    if msvcrt.kbhit():
-                        key = msvcrt.getch()
-            
-                        if key == b's' or key == b'S':
-                            print("Resumen de ejecución hasta el momento:")
-                            printPath(path, weights)
-                            print("\nProgreso: " + str(round(((i*(n-1)*n + j*n + k)/(n*(n-1)*n))*100,2)) + " %\n")
-
-                    if Md[j][k] < min:
-                        if Mp[j][k] == j:
-                            min = Md[j][k]
-                            idxmin = k
+            for j in range(n):
+                if j != i and not visited[j]:
+                    if Md[idx][j] < min:
+                        if Mp[idx][j] == idx:
+                            min = Md[idx][j]
+                            idxmin = j
                         else:
-                            if getValidPath(Mp, visited, j, k):
-                                min = Md[j][k]
-                                idxmin = k
+                            if getValidPath(Mp, visited, idx, j):
+                                min = Md[idx][j]
+                                idxmin = j
             
-            if Mp[j][k] == j:
-                totalW += min
+            if Mp[idx][idxmin] == idx:
                 visited[idxmin] = True
                 path.append(idxmin)
+                totalW += min
                 weights.append(totalW)
             else:
-                visitParents(Mp, path, weights, visited, j, k)
+                visitParents(Mp, path, weights, visited, idx, j)
                 totalW += min
+            
+            idx = idxmin
+
+        for u, w in G[idx]:
+            if u == i:
+                totalW += w
+                break
         
-        totalW += Md[path[len(path) - 1]][i]
         path.append(i)
+        weights.append(totalW)
 
         if totalW < minW:
             minW = totalW

@@ -89,8 +89,15 @@ class PathFinder:
         
         return minPath
 
-    def findPath(self, start):
-        return PathFinder.bigFSearch(self, start, [], [False]*len(self.cities), 0, len(self.cities), start, len(self.cities), [])
+    def findPath(self):
+        minWeight = float('inf')
+        path = None
+        for i in range(len(self.cities)):
+            tempPath = PathFinder.bigFSearch(self, i, [], [False]*len(self.cities), 0, len(self.cities), i, len(self.cities), [])
+            if tempPath[-1].weight < minWeight:
+                path = tempPath.copy()
+        
+        return path
         
 def printPath(path, final):
     print("\nCamino:")
@@ -128,7 +135,7 @@ print("¡Se ha cargado la lista de adyacencia!")
 
 print("\nAlgoritmo en ejecución\nPresione S para obtener el estado actual")
 
-shortestPath = PathFinder.findPath(pf, 0)
+shortestPath = PathFinder.findPath(pf)
 
 print("\n¡¡¡Camino más corto encontrado!!!")
 
