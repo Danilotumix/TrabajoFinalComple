@@ -83,11 +83,6 @@ def visitParents(Mp, visited, path, weights, idx, j):
 def WarshallFinder(G):
     Mp, Md = floydWarshall(G)
 
-    #for i in Md:
-    #    for v in i:
-    #        print(str(round(v,2)) + " ", end="")
-    #    print("")
-
     print("\nAlgoritmo en ejecución\nPresione S para obtener el estado actual")
 
     n = len(Md)
@@ -153,7 +148,7 @@ def WarshallFinder(G):
     
     return minPath, minWeights
 
-def printPath(path, weights):
+def printPath(path, weights, final = False):
     print("\nCamino:")
         
     for i in range(len(path)):
@@ -173,7 +168,10 @@ def printPath(path, weights):
             print("\n\nDistancia total:", round(weights[i], 2), "kilómetros")
     
     actualTime = time.time()
-    print("\nTiempo de ejecución hasta el momento:", round((actualTime - startTime), 2), "segundos")
+    if not final:
+        print("\nTiempo de ejecución hasta el momento:", round((actualTime - startTime), 2), "segundos")
+    else:
+        print("\nTiempo de ejecución total:", round((actualTime - startTime), 2), "segundos")
 
 if len(sys.argv) == 1:
     adyLstFN = "adylst.al"
@@ -184,7 +182,5 @@ G = loadWeightedGraph(adyLstFN)
 p, w = WarshallFinder(G)
 print("\n¡¡¡Camino (relativamente) más corto encontrado!!!")
 
-printPath(p,w)
+printPath(p,w,True)
 print("\nProgreso: 100 %")
-actualTime = time.time()
-print("\nTiempo de ejecución total:", round((actualTime - startTime), 2), "segundos")
