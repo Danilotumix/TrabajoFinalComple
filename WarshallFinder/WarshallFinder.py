@@ -173,14 +173,10 @@ def printPath(path, weights, final = False):
     else:
         print("\nTiempo de ejecución total:", round((actualTime - startTime), 2), "segundos")
 
-if len(sys.argv) == 1:
-    adyLstFN = "adylst.al"
-else:
-    adyLstFN = sys.argv[1]
+def run(filename = "adylst.al"):
+    G = loadWeightedGraph(filename)
+    p, w = WarshallFinder(G)
+    print("\n¡¡¡Camino (relativamente) más corto encontrado!!!")
 
-G = loadWeightedGraph(adyLstFN)
-p, w = WarshallFinder(G)
-print("\n¡¡¡Camino (relativamente) más corto encontrado!!!")
-
-printPath(p,w,True)
-print("\nProgreso: 100 %")
+    printPath(p,w,True)
+    print("\nProgreso: 100 %")

@@ -91,48 +91,44 @@ def MCB(ady, n):
 
   return adyc, cycle
 
-if len(sys.argv) == 1:
-    adyLstFN = "adylst.al"
-else:
-    adyLstFN = sys.argv[1]
+def run(filename = "adylst.al"):
+  with open(filename) as al:
+    line=al.readline().strip()
+    pre = []
+    for ss in al:
+      ss = ss.replace("\r", "").replace("\n", "")
+      a = ss.split(";")
+      b = [x.split(",") for x in a]
+      pre.append(b)
+  
+    proc = []
+    ns = []
+    for a in pre:
+      temp1 = []
+      for b in a:
+        i = 0
+        temp2 = []
+        for c in b:
+          if i == 0:
+            ns.append(int(c))
+            temp2.append(int(c))
+          else:
+            temp2.append(float(c))
+          i += 1
+          temp1.append(temp2)
+      proc.append(temp1)
+  
+    adyc,cycle = MCB(proc, max(ns)+1)
+    print("La ruta de Minimun Cycle Bifurcation es: ")
+    print(cycle)
+    print("")
+  
+    uwu=len(adyc)
 
-with open(adyLstFN) as al:
-  line=al.readline().strip()
-  pre = []
-  for ss in al:
-    ss = ss.replace("\r", "").replace("\n", "")
-    a = ss.split(";")
-    b = [x.split(",") for x in a]
-    pre.append(b)
-  
-  proc = []
-  ns = []
-  for a in pre:
-    temp1 = []
-    for b in a:
-      i = 0
-      temp2 = []
-      for c in b:
-        if i == 0:
-          ns.append(int(c))
-          temp2.append(int(c))
-        else:
-          temp2.append(float(c))
-        i += 1
-        temp1.append(temp2)
-    proc.append(temp1)
-  
-  adyc,cycle = MCB(proc, max(ns)+1)
-  print("La ruta de Minimun Cycle Bifurcation es: ")
-  print(cycle)
-  print("")
-  
-  uwu=len(adyc)
+    total = 0
 
-  total = 0
-
-  for inn in range(uwu):
-    for _, v in adyc[inn]:
-      total += v
+    for inn in range(uwu):
+      for _, v in adyc[inn]:
+        total += v
   
-  print("El recorrido total es: " + str(round(total, 5)) + " km")
+    print("El recorrido total es: " + str(round(total, 5)) + " km")

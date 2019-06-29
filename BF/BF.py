@@ -68,42 +68,38 @@ def bellman_ford(g, source):
 
     return distance
 
-if len(sys.argv) == 1:
-    inputCsv = "input2.csv"
-else:
-    inputCsv = sys.argv[1]
+def run(filename = "input2.csv"):
+    g = Grafo()
 
-g = Grafo()
-
-with open(inputCsv) as file:
-    reader = csv.reader(file)
-    a = [[]]
-    a = list(reader)
-    for k in range(1,len(a)+1):
-        g.agregar_vertice(k)
-    for i in range(len(a)):
-        x = a[i][3:-1]
-        for j in range(len(x)):
-            x = a[i][j + 3]
-            a1 = float(a[i][1])
-            a2 = float(a[i][2])
-            b1 = float(a[int(x) - 1][1])
-            b2 = float(a[int(x) - 1][2])
-            s = int(i + 1)
-            d = int(x)
-            m=b1-a1
-            n=b2-a1
-            Peso = math.sqrt(m*m+n*n)
-            if(k==186):
-                Peso= math.sqrt(Peso)
-            g.agregar_arco(s, d, Peso)
-while(True):
-    print('Desde que Nodo se desesa calcular el camino mas corto')
-    Origen=int(input())
-    source = g.obtener_vertice(Origen)
-    distance = bellman_ford(g, source)
-    print(' ')
-    print('Distancia desde el nodo {}: '.format(Origen))
-    for v in distance:
-        print('Hasta el nodo {}: {}'.format(v.get_key(), distance[v]))
-    print(' ')
+    with open(filename) as file:
+        reader = csv.reader(file)
+        a = [[]]
+        a = list(reader)
+        for k in range(1,len(a)+1):
+            g.agregar_vertice(k)
+        for i in range(len(a)):
+            x = a[i][3:-1]
+            for j in range(len(x)):
+                x = a[i][j + 3]
+                a1 = float(a[i][1])
+                a2 = float(a[i][2])
+                b1 = float(a[int(x) - 1][1])
+                b2 = float(a[int(x) - 1][2])
+                s = int(i + 1)
+                d = int(x)
+                m=b1-a1
+                n=b2-a1
+                Peso = math.sqrt(m*m+n*n)
+                if(k==186):
+                    Peso= math.sqrt(Peso)
+                g.agregar_arco(s, d, Peso)
+    while(True):
+        print('Desde que Nodo se desesa calcular el camino mas corto')
+        Origen=int(input())
+        source = g.obtener_vertice(Origen)
+        distance = bellman_ford(g, source)
+        print(' ')
+        print('Distancia desde el nodo {}: '.format(Origen))
+        for v in distance:
+            print('Hasta el nodo {}: {}'.format(v.get_key(), distance[v]))
+        print(' ')

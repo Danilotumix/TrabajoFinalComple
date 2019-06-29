@@ -1,5 +1,5 @@
-from City import City
-from Pair import Pair
+from .City import City
+from .Pair import Pair
 
 import msvcrt
 import time
@@ -120,28 +120,17 @@ def printPath(path, final):
     else:
         print("\nTiempo de ejecución total:", round((actualTime - startTime), 2), "segundos")
 
-if len(sys.argv) == 1:
-    adyLstFN = "adylst.al"
-else:
-    adyLstFN = sys.argv[1]
+def run(filename = "adylst.al"):
+    pf = PathFinder()
+    PathFinder.loadAdylst(pf, filename)
+    print("¡Se ha cargado la lista de adyacencia!")
 
-pf = PathFinder()
-PathFinder.loadAdylst(pf, adyLstFN)
-print("¡Se ha cargado la lista de adyacencia!")
+    print("\nAlgoritmo en ejecución\nPresione S para obtener el estado actual")
 
-print("\nAlgoritmo en ejecución\nPresione S para obtener el estado actual")
+    shortestPath = PathFinder.findPath(pf)
 
-shortestPath = PathFinder.findPath(pf)
+    print("\n¡¡¡Camino más corto encontrado!!!")
 
-print("\n¡¡¡Camino más corto encontrado!!!")
+    printPath(shortestPath, True)
 
-printPath(shortestPath, True)
-
-print("\nPresione F para continuar")
-
-while True:
-    if msvcrt.kbhit():
-        key = msvcrt.getch()
-            
-        if key == b'f' or key == b'F':
-            break
+    print("\nPresione F para continuar")

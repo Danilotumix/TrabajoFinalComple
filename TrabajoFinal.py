@@ -7,6 +7,11 @@ from tkinter import messagebox as msg
 
 from DBConverter.CityMap import CityMap
 
+import PathFinder.PathFinder as PF
+import MCB.MCB as MCB
+import WarshallFinder.WarshallFinder as WF
+import BF.BF as BF
+
 def generateAl(v):
     subp.Popen("cls", shell=True)
 
@@ -32,21 +37,24 @@ def process(v):
 
     if v == 0:
         #subp.Popen("cls", shell=True)
-        subp.Popen("\"PathFinder\PathFinder.py\" " + filename, shell=True)
+        #subp.Popen("\"PathFinder\PathFinder.py\" " + filename, shell=True)
+        PF.run(filename)
     
     if v == 1:
         #subp.Popen("cls", shell=True)
-        subp.Popen("\"WarshallFinder\WarshallFinder.py\" " + filename, shell=True)
+        #subp.Popen("\"WarshallFinder\WarshallFinder.py\" " + filename, shell=True)
+        WF.run(filename)
     
     if v == 2:
         #subp.Popen("cls", shell=True)
-        print("\"MCB\MCB.py\" " + filename)
-        subp.Popen("\"MCB\MCB.py\" " + filename, shell=True)
+        #subp.Popen("MCB\MCB.py" + filename)
+        MCB.run(filename)
 
     if v == 3:
         filename = filedialog.askopenfilename(initialdir = "./BF/", title = "Seleccione input", filetypes = (("Archivos de valores delimitados por comas","*.csv"), ("Todos los archivos", "*")))
         #subp.Popen("cls", shell=True)
-        subp.Popen("\"BF\BF.py\" " + filename, shell=True)
+        #subp.Popen("\"BF\BF.py\" " + filename, shell=True)
+        BF.run(filename)
 
 root = tk.Tk()
 root.geometry("150x140")
