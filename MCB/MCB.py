@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+import time
 from math import sqrt, inf
 from heapq import heappop, heappush
 
@@ -38,7 +38,6 @@ def distance(a, b):
   return sqrt(a**2 + b**2)
 
 def MCB(ady, n):
-  
   dist = [[inf]*n for i in range(n)]
   q = []
   for u in range(n):
@@ -92,6 +91,7 @@ def MCB(ady, n):
   return adyc, cycle
 
 def run(filename = "adylst.al"):
+  startTime= time.time()
   with open(filename) as al:
     line=al.readline().strip()
     pre = []
@@ -120,7 +120,9 @@ def run(filename = "adylst.al"):
   
     adyc,cycle = MCB(proc, max(ns)+1)
     print("La ruta de Minimun Cycle Bifurcation es: ")
+    cycle.append(cycle[0])
     print(cycle)
+  
     print("")
   
     uwu=len(adyc)
@@ -130,5 +132,6 @@ def run(filename = "adylst.al"):
     for inn in range(uwu):
       for _, v in adyc[inn]:
         total += v
-  
+    actualTime = time.time()
+    print("\nTiempo de ejecución total:", round((actualTime - startTime), 3), "segundos")
     print("El recorrido total es: " + str(round(total, 5)) + " km")
